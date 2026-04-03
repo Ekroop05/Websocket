@@ -9,6 +9,7 @@ function App() {
   const [joined, setJoined] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const chatEndRef = useRef(null);
 
   useEffect(() => {
@@ -16,13 +17,10 @@ function App() {
 
     socket.emit("join", username);
 
-    socket.on("loadMessages", (msgs) => {
-      setMessages(msgs);
-    });
-
-    socket.on("message", (msg) => {
-      setMessages((prev) => [...prev, msg]);
-    });
+    socket.on("loadMessages", (msgs) => setMessages(msgs));
+    socket.on("message", (msg) =>
+      setMessages((prev) => [...prev, msg])
+    );
 
     return () => {
       socket.off("loadMessages");
@@ -37,73 +35,66 @@ function App() {
   const sendMessage = () => {
     if (!message.trim()) return;
 
-    socket.emit("message", {
-      user: username,
-      text: message,
-    });
-
+    socket.emit("message", { user: username, text: message });
     setMessage("");
   };
 
-  // 🔥 JOIN SCREEN
   if (!joined) {
     return (
       <div className="join-screen">
-        <h2>Enter your name</h2>
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Your name..."
-        />
-        <button onClick={() => username && setJoined(true)}>
-          Join Chat
-        </button>
+        <div className="join-card">
+          <h2>Join Chat</h2>
+          <input
+            placeholder="Enter username..."
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <button onClick={() => username && setJoined(true)}>
+            Continue
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="app">
-      {/* SIDEBAR */}
-      <div className="sidebar">
-        <h3>💬 Chat</h3>
-        <p className="username">You: {username}</p>
-
-        <div className="users">
-          <h4>Online</h4>
-          <p>Coming soon...</p>
-        </div>
+      <div className={`sidebar ${isSidebarOpen ? "" : "closed"}`}>
+        <h2>💬 Chat</h2>
+        <p className="me">👤 {username}</p>
       </div>
 
-      {/* CHAT AREA */}
-      <div className="chat-container">
+      <div className="chat">
         <div className="chat-header">
-          <h3>General Chat</h3>
+          <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+            ☰
+          </button>
+          <h3>General</h3>
         </div>
 
-        <div className="chat-box">
-          {messages.map((msg, index) => (
+        <div className="messages">
+          {messages.map((msg, i) => (
             <div
-              key={index}
-              className={`message ${
+              key={i}
+              className={`bubble ${
                 msg.user === username ? "own" : ""
               }`}
             >
-              <span className="user">{msg.user}</span>
+              <span>{msg.user}</span>
               <p>{msg.text}</p>
             </div>
           ))}
           <div ref={chatEndRef} />
         </div>
 
-        <div className="input-box">
+        <div className="input">
           <input
+            placeholder="Type a message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type message..."
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           />
-          <button onClick={sendMessage}>Send</button>
+          <button onClick={sendMessage}>➤</button>
         </div>
       </div>
     </div>

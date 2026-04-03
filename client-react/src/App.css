@@ -1,34 +1,40 @@
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Inter", sans-serif;
+  background: #0f172a;
 }
 
-/* JOIN SCREEN */
+/* JOIN */
 .join-screen {
   height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #0f172a;
+}
+
+.join-card {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
   color: white;
 }
 
-.join-screen input {
+.join-card input {
   padding: 10px;
-  margin: 10px;
   width: 200px;
+  margin: 10px 0;
 }
 
-.join-screen button {
+.join-card button {
   padding: 10px 20px;
-  background: #2563eb;
+  background: #3b82f6;
   border: none;
   color: white;
   cursor: pointer;
 }
 
-/* MAIN LAYOUT */
+/* LAYOUT */
 .app {
   display: flex;
   height: 100vh;
@@ -36,86 +42,91 @@ body {
 
 /* SIDEBAR */
 .sidebar {
-  width: 250px;
+  width: 220px;
   background: #1e293b;
-  color: white;
   padding: 20px;
+  color: white;
+  transition: 0.3s;
 }
 
-.username {
-  font-size: 0.9rem;
+.sidebar.closed {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.me {
+  margin-top: 20px;
   opacity: 0.7;
 }
 
-.users {
-  margin-top: 20px;
-}
-
 /* CHAT */
-.chat-container {
+.chat {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #0f172a;
 }
 
+/* HEADER */
 .chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 15px;
-  border-bottom: 1px solid #334155;
+  background: #020617;
   color: white;
+  border-bottom: 1px solid #334155;
 }
 
 /* MESSAGES */
-.chat-box {
+.messages {
   flex: 1;
-  padding: 15px;
+  padding: 20px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
 }
 
-.message {
+.bubble {
   max-width: 60%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 10px;
   background: #334155;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
   color: white;
 }
 
-.message.own {
-  align-self: flex-end;
-  background: #2563eb;
-}
-
-.user {
+.bubble span {
   font-size: 0.7rem;
   opacity: 0.6;
 }
 
-/* INPUT */
-.input-box {
-  display: flex;
-  border-top: 1px solid #334155;
+.bubble.own {
+  margin-left: auto;
+  background: #3b82f6;
 }
 
-.input-box input {
+/* INPUT */
+.input {
+  display: flex;
+  padding: 10px;
+  background: #020617;
+}
+
+.input input {
   flex: 1;
   padding: 12px;
   border: none;
   outline: none;
-  background: #020617;
+  background: #1e293b;
   color: white;
+  border-radius: 8px;
 }
 
-.input-box button {
-  padding: 12px 20px;
-  background: #2563eb;
+.input button {
+  margin-left: 10px;
+  padding: 12px;
   border: none;
+  background: #3b82f6;
   color: white;
+  border-radius: 8px;
   cursor: pointer;
-}
-
-.input-box button:hover {
-  background: #1d4ed8;
 }
