@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WebSocket Chat</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h2>💬 WebSocket Chat</h2>
+
+  <div id="chat"></div>
+
+  <input type="text" id="msg" placeholder="Type message..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <!-- Socket.IO client -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
